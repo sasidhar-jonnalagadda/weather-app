@@ -44,3 +44,5 @@ searchBox.addEventListener("keypress", function (event) {
     checkWeather(searchBox.value);
   }
 });
+
+checkWeather("Hyderabad");
