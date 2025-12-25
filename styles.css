@@ -97,3 +97,11 @@ button {
 .weather {
     display: none;
 }
+
+#location-btn {
+  margin-left: 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
