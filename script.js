@@ -4,85 +4,73 @@ const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
+const locationBtn = document.getElementById("location-btn");
+const weatherBlock = document.querySelector(".weather");
+const errorBlock = document.querySelector(".error");
 
-async function checkWeather(city) {
-  const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
-  if (response.status == 404) {
-    document.querySelector(".error").style.display = "block";
-    document.querySelector(".weather").style.display = "none";
-  } else {
-    var data = await response.json();
-
-  document.querySelector(".city").innerHTML = data.name;
-  document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
-  document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-  document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
-
-  if (data.weather[0].main == "Clouds") {
-    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
-  } else if (data.weather[0].main == "Clear") {
-    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
-  } else if (data.weather[0].main == "Rain") {
-    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
-  } else if (data.weather[0].main == "Drizzle") {
-    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
-  } else if (data.weather[0].main == "Mist") {
-    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
-  }
-
-  document.querySelector(".weather").style.display = "block";
-    document.querySelector(".error").style.display = "none";
+async function fetchWeather(url) {
+    try {
+        const response = await fetch(url);
+        
+        if (response.status == 404) {
+            errorBlock.style.display = "block";
+            weatherBlock.style.display = "none";
+        } else {
+            const data = await response.json();
+            updateWeatherUI(data);
+        }
+    } catch (error) {
+        console.error("Error fetching weather:", error);
+    }
 }
+
+function updateWeatherUI(data) {
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+
+    const weatherMain = data.weather[0].main;
+    
+    if (weatherMain == "Clouds") {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
+    } else if (weatherMain == "Clear") {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
+    } else if (weatherMain == "Rain") {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
+    } else if (weatherMain == "Drizzle") {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
+    } else if (weatherMain == "Mist") {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
+    } else if (weatherMain == "Snow") {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/snow.png";
+    }
+
+    weatherBlock.style.display = "block";
+    errorBlock.style.display = "none";
 }
 
 searchBtn.addEventListener("click", () => {
-  checkWeather(searchBox.value);
+    fetchWeather(apiUrl + searchBox.value + `&appid=${apiKey}`);
 });
 
-searchBox.addEventListener("keypress", function (event) {
-  if (event.key === "Enter") {
-    checkWeather(searchBox.value);
-  }
+searchBox.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        fetchWeather(apiUrl + searchBox.value + `&appid=${apiKey}`);
+    }
 });
-
-const locationBtn = document.getElementById("location-btn");
 
 locationBtn.addEventListener("click", () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      console.log(`Lat: ${lat}, Lon: ${lon}`);
-
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${apiKey}`
-      );
-      var data = await response.json();
-
-      document.querySelector(".city").innerHTML = data.name;
-      document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
-      document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-      document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
-
-      if (data.weather[0].main == "Clouds") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
-      } else if (data.weather[0].main == "Clear") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
-      } else if (data.weather[0].main == "Rain") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
-      } else if (data.weather[0].main == "Drizzle") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
-      } else if (data.weather[0].main == "Mist") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
-      }
-
-      document.querySelector(".weather").style.display = "block";
-      document.querySelector(".error").style.display = "none";
-    });
-  } else {
-    alert("Geolocation is not supported by this browser.");
-  }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${apiKey}`;
+            fetchWeather(url);
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
 });
 
-checkWeather("Hyderabad");
+fetchWeather(apiUrl + "Hyderabad" + `&appid=${apiKey}`);
