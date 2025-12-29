@@ -25,29 +25,38 @@ async function fetchWeather(url) {
 }
 
 function updateWeatherUI(data) {
-    document.querySelector(".city").innerHTML = data.name;
-    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
-    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-    document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+  document.querySelector(".city").innerHTML = data.name;
+  document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+  document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+  document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
 
-    const weatherMain = data.weather[0].main;
-    
-    if (weatherMain == "Clouds") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
-    } else if (weatherMain == "Clear") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
-    } else if (weatherMain == "Rain") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
-    } else if (weatherMain == "Drizzle") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
-    } else if (weatherMain == "Mist") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
-    } else if (weatherMain == "Snow") {
-        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/snow.png";
-    }
+  const weatherMain = data.weather[0].main;
+  const card = document.querySelector(".card");
 
-    weatherBlock.style.display = "block";
-    errorBlock.style.display = "none";
+  if (weatherMain == "Clouds") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
+    card.style.background = "linear-gradient(135deg, #757F9A, #D7DDE8)";
+  } else if (weatherMain == "Clear") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
+    card.style.background = "linear-gradient(135deg, #fceabb, #f8b500)";
+  } else if (weatherMain == "Rain") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
+    card.style.background = "linear-gradient(135deg, #2c3e50, #2980b9)";
+  } else if (weatherMain == "Drizzle") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
+    card.style.background = "linear-gradient(135deg, #4c669f, #3b5998)";
+  } else if (weatherMain == "Mist") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
+    card.style.background = "linear-gradient(135deg, #3E5151, #DECBA4)";
+  } else if (weatherMain == "Snow") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/snow.png";
+    card.style.background = "linear-gradient(135deg, #83a4d4, #b6fbff)";
+  } else {
+    card.style.background = "linear-gradient(135deg, #00feba, #5b548a)";
+  }
+
+  document.querySelector(".weather").style.display = "block";
+  document.querySelector(".error").style.display = "none";
 }
 
 searchBtn.addEventListener("click", () => {
