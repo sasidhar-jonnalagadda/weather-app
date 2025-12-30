@@ -45,10 +45,10 @@ function updateWeatherUI(data) {
   } else if (weatherMain == "Drizzle") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
     card.style.background = "linear-gradient(135deg, #4c669f, #3b5998)";
-  } else if (weatherMain == "Mist") {
+  } else if (["Mist", "Haze", "Fog", "Smoke"].includes(weatherMain)) {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
     card.style.background = "linear-gradient(135deg, #3E5151, #DECBA4)";
-  } else if (weatherMain == "Snow") {
+} else if (weatherMain == "Snow") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/snow.png";
     card.style.background = "linear-gradient(135deg, #83a4d4, #b6fbff)";
   } else {
