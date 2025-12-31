@@ -70,16 +70,22 @@ searchBox.addEventListener("keypress", (event) => {
 });
 
 locationBtn.addEventListener("click", () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${apiKey}`;
-            fetchWeather(url);
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        fetchWeather(url);
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        alert("Unable to retrieve your location. Please check your browser settings.");
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
 });
 
 fetchWeather(apiUrl + "Hyderabad" + `&appid=${apiKey}`);
