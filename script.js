@@ -7,20 +7,27 @@ const weatherIcon = document.querySelector(".weather-icon");
 const locationBtn = document.getElementById("location-btn");
 const weatherBlock = document.querySelector(".weather");
 const errorBlock = document.querySelector(".error");
+const loader = document.querySelector(".loader");
 
 async function fetchWeather(url) {
     try {
+        loader.style.display = "block";
+        weatherBlock.style.display = "none";
+        errorBlock.style.display = "none";
+
         const response = await fetch(url);
         
+        loader.style.display = "none"; 
+
         if (response.status == 404) {
             errorBlock.style.display = "block";
-            weatherBlock.style.display = "none";
         } else {
             const data = await response.json();
             updateWeatherUI(data);
         }
     } catch (error) {
         console.error("Error fetching weather:", error);
+        loader.style.display = "none";
     }
 }
 
