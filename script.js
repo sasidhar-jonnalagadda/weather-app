@@ -34,6 +34,7 @@ async function fetchWeather(url) {
 function updateWeatherUI(data) {
   document.querySelector(".city").innerHTML = data.name;
   document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+  document.querySelector(".feels-like").innerHTML = `Feels like ${Math.round(data.main.feels_like)}°c`;
   document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
   document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
 
