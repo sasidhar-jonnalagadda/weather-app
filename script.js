@@ -68,12 +68,18 @@ function updateWeatherUI(data) {
 }
 
 searchBtn.addEventListener("click", () => {
-    fetchWeather(apiUrl + searchBox.value + `&appid=${apiKey}`);
+    const city = searchBox.value.trim();
+    if (city !== "") {
+        fetchWeather(apiUrl + city + `&appid=${apiKey}`);
+    }
 });
 
 searchBox.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
-        fetchWeather(apiUrl + searchBox.value + `&appid=${apiKey}`);
+        const city = searchBox.value.trim();
+        if (city !== "") {
+            fetchWeather(apiUrl + city + `&appid=${apiKey}`);
+        }
     }
 });
 
