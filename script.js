@@ -59,7 +59,11 @@ function updateWeatherUI(data) {
 } else if (weatherMain == "Snow") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/snow.png";
     card.style.background = "linear-gradient(135deg, #83a4d4, #b6fbff)";
+  } else if (weatherMain == "Thunderstorm") {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/storm.png";
+    card.style.background = "linear-gradient(135deg, #373B44, #4286f4)";
   } else {
+    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
     card.style.background = "linear-gradient(135deg, #00feba, #5b548a)";
   }
 
