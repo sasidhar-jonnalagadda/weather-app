@@ -40,29 +40,45 @@ function updateWeatherUI(data) {
 
   const weatherMain = data.weather[0].main;
   const card = document.querySelector(".card");
+  
+  const isDay = data.dt > data.sys.sunrise && data.dt < data.sys.sunset;
 
   if (weatherMain == "Clouds") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
-    card.style.background = "linear-gradient(135deg, #757F9A, #D7DDE8)";
-  } else if (weatherMain == "Clear") {
-    weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
-    card.style.background = "linear-gradient(135deg, #fceabb, #f8b500)";
-  } else if (weatherMain == "Rain") {
+    card.style.background = isDay 
+        ? "linear-gradient(135deg, #757F9A, #D7DDE8)" 
+        : "linear-gradient(135deg, #232526, #414345)";
+  } 
+  else if (weatherMain == "Clear") {
+    if (isDay) {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/sun.png";
+        card.style.background = "linear-gradient(135deg, #fceabb, #f8b500)";
+    } else {
+        weatherIcon.src = "https://img.icons8.com/clouds/100/000000/moon.png";
+        card.style.background = "linear-gradient(135deg, #000428, #004e92)";
+    }
+  } 
+  else if (weatherMain == "Rain") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
     card.style.background = "linear-gradient(135deg, #2c3e50, #2980b9)";
-  } else if (weatherMain == "Drizzle") {
+  } 
+  else if (weatherMain == "Drizzle") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/rain.png";
     card.style.background = "linear-gradient(135deg, #4c669f, #3b5998)";
-  } else if (["Mist", "Haze", "Fog", "Smoke"].includes(weatherMain)) {
+  } 
+  else if (["Mist", "Haze", "Fog", "Smoke"].includes(weatherMain)) {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/fog-day.png";
     card.style.background = "linear-gradient(135deg, #3E5151, #DECBA4)";
-} else if (weatherMain == "Snow") {
+  } 
+  else if (weatherMain == "Snow") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/snow.png";
     card.style.background = "linear-gradient(135deg, #83a4d4, #b6fbff)";
-  } else if (weatherMain == "Thunderstorm") {
+  } 
+  else if (weatherMain == "Thunderstorm") {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/storm.png";
     card.style.background = "linear-gradient(135deg, #373B44, #4286f4)";
-  } else {
+  } 
+  else {
     weatherIcon.src = "https://img.icons8.com/clouds/100/000000/clouds.png";
     card.style.background = "linear-gradient(135deg, #00feba, #5b548a)";
   }
