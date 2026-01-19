@@ -40,6 +40,20 @@ function updateWeatherUI(data) {
     let temp = data.main.temp;
     let feelsLike = data.main.feels_like;
     let unitSymbol = "°c";
+    const timezoneOffset = data.timezone;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const targetTime = new Date(utc + (1000 * timezoneOffset));
+
+    const options = { 
+        weekday: 'long', 
+        hour: 'numeric', 
+        minute: 'numeric', 
+        hour12: true 
+    };
+    const formattedTime = targetTime.toLocaleTimeString('en-US', options);
+    
+    document.querySelector(".date-time").innerText = formattedTime;
 
     if (!isCelsius) {
         temp = (temp * 9/5) + 32;
