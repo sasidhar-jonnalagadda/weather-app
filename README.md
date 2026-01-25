@@ -42,4 +42,4 @@ A feature-rich, responsive weather application built with vanilla JavaScript. Th
 ├── index.html      # Main HTML structure
 ├── styles.css      # Styling, gradients, and responsive design
 ├── script.js       # API logic, timezone math, and DOM manipulation
-└── README.md       # Project documentation
+└── README.md       # Project documentation 
