@@ -168,3 +168,9 @@ button {
 .day-card p {
   margin: 0;
 }
+
+.card {
+  background: linear-gradient(135deg, #00feba, #5b548a);
+  
+  transition: background 1s ease-in-out; 
+}
