@@ -174,3 +174,13 @@ button {
   
   transition: background 1s ease-in-out; 
 }
+
+button:hover {
+  background: #eee;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
